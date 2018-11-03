@@ -1,0 +1,296 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Google Cloud Workshop</title>
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../elements/codelab.html">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <style is="custom-style">
+    body {
+      font-family: "Roboto",sans-serif;
+      background: var(--google-codelab-background, #F8F9FA);
+    }
+  </style>
+  
+</head>
+<body unresolved class="fullbleed">
+
+  <google-codelab title="Google Cloud Workshop"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Introduction" duration="0">
+        <h2>What you need</h2>
+<ul>
+<li>A Gmail account</li>
+<li>Google Cloud SDK installed on your local machine</li>
+</ul>
+<h2 class="checklist">What you&#39;ll learn</h2>
+<ul class="checklist">
+<li>Basics of Google Cloud</li>
+<li>How to set up and use Cloud SQL with a client</li>
+<li>Create and interact with your first GCS bucket using the UI and Command Line tool</li>
+<li>Create a Pubsub topic and subscription</li>
+<li>Create a Google Compute Engine instance</li>
+<li>Deploy an application in GCE</li>
+<li>Monitoring your application</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setup and Requirements" duration="0">
+        <h2>Project</h2>
+<h3>What is Project</h3>
+<p>A project organizes all your Google Cloud Platform resources. A project consists of a set of users; a set of APIs; and billing, authentication, and monitoring settings for those APIs. So, for example, all of your Cloud Storage buckets and objects, along with user permissions for accessing them, reside in a project. You can have one project, or you can create multiple projects.</p>
+<h3>Create a Project</h3>
+<p>If you don&#39;t already have a Google Account (Gmail or Google Apps), you must <a href="https://accounts.google.com/SignUp" target="_blank">create one</a>. Sign-in to Google Cloud Platform console (<a href="http://console.cloud.google.com/" target="_blank">console.cloud.google.com</a>) and create a new project:</p>
+<p><img style="max-width: 278.00px" src="img/fabfa63af191ac0c.png"></p>
+<p><img style="max-width: 544.00px" src="img/7c3caa4c26a21879.png"></p>
+<p>Remember the project ID, a unique name across all Google Cloud projects (the name above has already been taken and will not work for you, sorry!). It will be referred to later in this workshop as <strong><code>PROJECT_ID</code></strong>.</p>
+<h3>Enable Billing</h3>
+<p>Next, you&#39;ll need to <a href="https://console.developers.google.com/billing" target="_blank">enable billing</a> in the Developers Console in order to use Google Cloud resources and <a href="https://console.developers.google.com/flows/enableapi?apiid=compute_component" target="_blank">enable the Compute Engine API</a>.</p>
+<p>New users of Google Cloud Platform are eligible for a <a href="https://console.developers.google.com/billing/freetrial?hl=en" target="_blank">$300 free trial</a>.</p>
+<h2>Cloud Shell</h2>
+<h3>Activate Google Cloud Shell</h3>
+<p>From the GCP Console click the Cloud Shell icon on the top right toolbar:</p>
+<p><img style="max-width: 276.00px" src="img/d49d6f994f9d1089.png"></p>
+<p>Then click &#34;Start Cloud Shell&#34;:</p>
+<p><img style="max-width: 675.07px" src="img/30dfb7e88dc693cb.png"></p>
+<p>It should only take a few moments to provision and connect to the environment:</p>
+<p><img style="max-width: 624.00px" src="img/638582c3614433f3.png"></p>
+<p>Once connected to the cloud shell, you should see that you are already authenticated and that the project is already set to your <em>PROJECT_ID</em>.</p>
+<p>Run the following command in the cloud shell to confirm that you are authenticated:</p>
+<pre>gcloud auth list</pre>
+<p><strong>Command output</strong></p>
+<pre>Credentialed accounts:
+ - &lt;myaccount&gt;@&lt;mydomain&gt;.com (active)</pre>
+<p>Run the following command in the cloud shell to list out the projects:</p>
+<pre>gcloud config list project</pre>
+<p><strong>Command output</strong></p>
+<pre>[core]
+project = &lt;PROJECT_ID&gt;</pre>
+<p>If it is not, you can set it with this command:</p>
+<pre>gcloud config set project &lt;PROJECT_ID&gt;</pre>
+<h2>Google Cloud SDK</h2>
+<p>The Cloud SDK is a set of tools for Cloud Platform. It contains gcloud, gsutil, and bq, which you can use to access Compute Engine, Cloud Storage, BigQuery, and other products and services from the command-line. You can run these tools interactively or in your automated scripts.</p>
+<p><a href="https://cloud.google.com/sdk/docs/quickstarts" target="_blank"><paper-button class="colored" raised>Install Cloud SDK</paper-button></a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="RDBMS in GCP" duration="0">
+        <h2>What is RDBMS in GCP</h2>
+<p>RDBMS in GCP  is a fully managed database service that makes it easy to set up, maintain, manage, and administer your relational databases in the cloud. Google Cloud SQL offers high performance, scalability, and convenience and it provides a database infrastructure for applications running anywhere. Google Cloud SQL Currently supports MySQL and POSTGRES.</p>
+<h2>Setting Up CloudSQL (Postgres)</h2>
+<h3>Step 1</h3>
+<p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select SQL in the Storage subsection.</p>
+<p><img style="max-width: 484.00px" src="img/3163f82862c79110.png"></p>
+<p>You should now see the Cloud SQL web UI, and assuming you are using a project that does not currently have any Cloud SQL instances, you will see a dialog box inviting you to create a new Cloud SQL instance.</p>
+<p><img style="max-width: 624.00px" src="img/58bf3f6286adb67b.png"></p>
+<h3>Step 2</h3>
+<p>Click <strong>Create Instance</strong>. Select Which database you want to use. Currently, It supports Only <strong>Mysql</strong> and <strong>PostgreSQL. </strong>This will take you to the <em>Create an instance</em> page.</p>
+<p><img style="max-width: 482.00px" src="img/f03219b4080eb919.png"></p>
+<h3>Step 3</h3>
+<p>Here you must specify a name for your instance. This name must be unique within your project. You have to configure the password for the admin user and database region. </p>
+<p><img style="max-width: 480.00px" src="img/d32055a3e09ddebe.png"></p>
+<p>Additionally, you can configure the machine type and storage capacity and other database flags by clicking on <strong>show configuration options. </strong>Once you are done with </p>
+<p><img style="max-width: 494.00px" src="img/bc6a1114765cc1c6.png"></p>
+<p><img style="max-width: 478.00px" src="img/f87f2dccba93bdcd.png"><img style="max-width: 476.00px" src="img/2e1e8cc82f3ed69b.png"></p>
+<p><strong>Click on Create. </strong></p>
+<p><img style="max-width: 483.00px" src="img/cf0436463437b61c.png"></p>
+<p>You will be taken to the <em>Instances</em> page, where you will see your new instance with a spinner on the left, indicating it is still being created:</p>
+<p><img style="max-width: 624.00px" src="img/cfd34f58e5c91832.png"></p>
+<p>In two or three minutes, the instance will be available, and a green checkmark will replace the blue spinner. Make sure to refresh the page from time to time:</p>
+<p><img style="max-width: 631.50px" src="img/8b7275175ede9a71.png"></p>
+<p><strong>Your Cloud SQL instance is now ready to use.</strong></p>
+<h2>Connection Options</h2>
+<p>Currently, there are 3 ways of connecting to Cloud SQL:</p>
+<ul>
+<li>Through Private IP Address on a <a href="https://cloud.google.com/vpc/" target="_blank">VPC</a></li>
+<li>Through the <a href="https://github.com/GoogleCloudPlatform/cloudsql-proxy" target="_blank">Cloud SQL Proxy</a></li>
+<li>Through Public IP Address</li>
+</ul>
+<h2>Connection &amp; Data Manipulation</h2>
+<h3>Connection through Cloud Shell</h3>
+<h3>Step 1</h3>
+<p>Activate Google Cloud Shell by pressing the prompt button in the Google Cloud Console.</p>
+<h3>Step 2</h3>
+<p>Connect to your Cloud SQL instance using the gcloud beta sql command shown below, but replace <strong>&#34;imaginea-gc-workshop&#34;</strong> with the name of your instance, if different and enter password</p>
+<p>gcloud sql connect imaginea-gc-workshop --user=postgres</p>
+<p><strong>Command output</strong></p>
+<pre>Whitelisting your IP for incoming connection for 5 minutes...done.
+Connecting to database with SQL user [postgres].Password for user postgres:
+psql (9.6.10, server 9.6.6)
+SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES128-GCM-SHA256, bits: 128, compression: off)
+Type &#34;help&#34; for help.
+
+postgres=&gt;</pre>
+<p>Run the following command in the cloud shell to create database</p>
+<pre>create database gc_demo;</pre>
+<p><strong>Command output</strong></p>
+<pre>CREATE DATABASE</pre>
+<p>Run the following command in the cloud shell to change database and enter the password in the prompt</p>
+<pre>\c gc_demo</pre>
+<p><strong>Command output</strong></p>
+<pre>CREATE DATABASE</pre>
+<p>Run the following commands to create and view tables.</p>
+<pre># List available databases
+\l
+
+# List available tables
+\dt
+
+# List available schema in the connected database
+\dn
+
+CREATE TABLE guestbook (guestName VARCHAR(255), content VARCHAR(255), entryID SERIAL PRIMARY KEY);
+INSERT INTO guestbook (guestName, content) values (&#39;first guest&#39;, &#39;I got here!&#39;);
+INSERT INTO guestbook (guestName, content) values (&#39;second guest&#39;, &#39;Me too!&#39;);
+SELECT * FROM guestbook;
+</pre>
+<h3>Connection through Cloud SQL Proxy</h3>
+<p>The Cloud SQL Proxy is a secure way to connect to your Cloud SQL instance.</p>
+<h3>Step 1 - Install the Proxy</h3>
+<p><a href="https://cloud.google.com/sql/docs/mysql/sql-proxy#install" target="_blank">Download</a> the Cloud SQL Proxy accordingly to your Operating System. In the following example we are using Linux 64-bit and make it executable with the following commands:</p>
+<pre>wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+
+chmod +x cloud_sql_proxy</pre>
+<h3>Step 2 - Creating Service Account for use on the Proxy</h3>
+<p><a href="https://console.cloud.google.com/iam-admin/serviceaccounts/?authuser=1" target="_blank"><paper-button class="colored" raised>GO TO THE SERVICE ACCOUNTS PAGE</paper-button></a> If needed, select the project that contains your Cloud SQL instance. Click <strong>Create service account</strong>.</p>
+<p><img style="max-width: 624.00px" src="img/2ada90b116a952f6.png"></p>
+<p>In the Create service account dialog, provide a descriptive name for the service account.</p>
+<p><img style="max-width: 624.00px" src="img/2d434ec7f757bb7.png"></p>
+<p>    For <strong>Role</strong>, select one of the following roles:</p>
+<ul>
+<li><strong>Cloud SQL &gt; Cloud SQL Client</strong></li>
+<li><strong>Cloud SQL &gt; Cloud SQL Editor</strong></li>
+<li><strong>Cloud SQL &gt; Cloud SQL Admin</strong></li>
+</ul>
+<p><img style="max-width: 624.00px" src="img/c67de0abdb204975.png"></p>
+<p>Click <strong>Create key</strong> and Choose JSON in the dialog. Click on create  and download the JSON file. Keep the file Securely.</p>
+<p><img style="max-width: 523.00px" src="img/177e121c0fd67d67.png"></p>
+<p>Click <strong>Create</strong>.</p>
+<h3>Step 3 - Start the proxy</h3>
+<p>Run the following command in your terminal to start the proxy.</p>
+<pre>./cloud_sql_proxy -instances=&lt;INSTANCE_CONNECTION_NAME&gt;=tcp:5432 \
+                  -credential_file=&lt;PATH_TO_KEY_FILE&gt; &amp;</pre>
+<h3>Step 4 - Use PGAdmin to connect the proxy sql connection.</h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Storage in Cloud" duration="0">
+        <h2>What is it?</h2>
+<p>Cloud Storage allows world-wide storage and retrieval of any amount of data at any time. You can use Cloud Storage for a range of scenarios including serving website content, storing data for archival and disaster recovery, or distributing large data objects to users via direct download.</p>
+<h2>Bucket Creation Using Console</h2>
+<h3>Step 1</h3>
+<p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select Storage &gt; Browser in the Storage subsection</p>
+<p><img style="max-width: 439.00px" src="img/8cd8f6b781e5f497.png"></p>
+<h3>Step 2</h3>
+<p>Click on<strong> Create Bucket</strong></p>
+<h3>Step 3</h3>
+<p>Name your bucket, it must be unique across all of GCP, not just your project. Then select Regional as the default storage class. Choose <code>asia-south1</code> as your Region.</p>
+<p><img style="max-width: 624.00px" src="img/4d680e1cbcabbf0f.png"></p>
+<h3>Step 4</h3>
+<p>You have now created your first bucket! Let&#39;s upload some files. You can upload whatever files you want to use.</p>
+<p><img style="max-width: 624.00px" src="img/2287910c2cb582e.png"></p>
+<h3>Step 5</h3>
+<p>You can Share your file with a specific user or Group or Public. By editing permission of the file you can do this. </p>
+<p><img style="max-width: 624.00px" src="img/2156c70ceee5b462.png"></p>
+<h2>Create a second GCS bucket using the command line tool, gsutil</h2>
+<p>To create a second GCS bucket using the gsutil command use your local terminal environment with the GCP SDK installed, or use the Google Cloud Shell which has all of the SDK tools pre-installed.</p>
+<h3>Step 1</h3>
+<p>Open the Google Cloud Shell</p>
+<p><img style="max-width: 319.00px" src="img/56c39f30d1bab9b3.png"></p>
+<h3>Step 2</h3>
+<p>Use gsutil to create a new regional bucket in asia-south1</p>
+<p>Run the following command in cloud console to create the bucket.</p>
+<pre>gsutil mb -c regional -l asia-south1 gs://&lt;Bucket Name&gt;
+Bucket Creation</pre>
+<h3>Step 3</h3>
+<p>Use the gsutil cp command to copy the image from the location where you saved it to the bucket you created</p>
+<pre>gsutil cp Desktop/kitten.png gs://&lt;Bucket Name&gt;</pre>
+<h3>Step 4</h3>
+<p>Use the gsutil ls command to list the contents at the top level of your bucket:</p>
+<pre>gsutil ls gs://&lt;Bucket Name&gt;</pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Messaging in Cloud" duration="0">
+        <h2>Introduction</h2>
+<p>Messaging is a technology that enables high-speed, asynchronous, program-to-program communication with reliable delivery. Programs communicate by sending packets of data called messages to each other. Google Cloud Pub/Sub is a fully-managed real-time messaging service that allows you to send and receive messages between independent applications.</p>
+<h2>Create a topic and subscription Using Console</h2>
+<p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select Pub/Sub in the Bigdata subsection</p>
+<p><img style="max-width: 428.00px" src="img/bf7038a0cdd2e3b5.png"></p>
+<p>Click <strong>Enable API</strong></p>
+<h3><img style="max-width: 446.00px" src="img/3b618a43a9adf06.png"></h3>
+<p>Click <strong>Create Topic</strong></p>
+<p><img style="max-width: 443.00px" src="img/67181485b4a0abd7.png"></p>
+<p>Type the name of the topic and then click <strong>Create</strong>.</p>
+<p><img style="max-width: 506.00px" src="img/b23dee499fd3c810.png"></p>
+<p>After the topic is created, remain on the Topics page. Look for the topic you just created, press the three vertical dots at the end of the line and click <strong>New Subscription</strong>.</p>
+<p><img style="max-width: 624.00px" src="img/b492d38fc6e85c4b.png"></p>
+<p>Type the subscription name in the text box and click <strong>Create</strong>.</p>
+<p><img style="max-width: 481.00px" src="img/f0d7967759b4479c.png"></p>
+<h2>Create a topic and subscription Using Cloud Shell</h2>
+<p>From the te you just set up, create a topic.</p>
+<pre>gcloud pubsub topics create &lt;Topic Name&gt;</pre>
+<p>Create a subscription attached to this topic:</p>
+<pre>gcloud beta pubsub subscriptions create &lt;Subscription Name&gt; --topic &lt;Topic Name&gt;</pre>
+<h2>Publish Message</h2>
+<p>In the Cloud Pub/Sub topics page, Look for the topic you just created,  press the three vertical dots at the end of the line and click <strong>Publish Message</strong></p>
+<p><img style="max-width: 624.00px" src="img/b6b08f0e9da84cf1.png"></p>
+<p>Enter <code>Hello World</code> in the <strong>Message</strong> field and Click <strong>Publish</strong></p>
+<p><img style="max-width: 468.00px" src="img/95f8b2fd3fdaef02.png"></p>
+<h2>Pull Messages</h2>
+<p>Open the Cloud Shell and Enter the following</p>
+<pre>gcloud pubsub subscriptions pull --auto-ack &lt;Subscription Name&gt;</pre>
+<p>The message you sent appears in the DATA field of the <strong>command output.</strong></p>
+<pre>┌─────────────┬─────────────────┬────────────┐
+│     DATA    │    MESSAGE_ID   │ ATTRIBUTES │
+├─────────────┼─────────────────┼────────────┤
+│ Hello World │ 287821426252241 │            │
+└─────────────┴─────────────────┴────────────┘</pre>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-49880327-14', 'auto');
+
+    (function() {
+      var gaCodelab = '';
+      if (gaCodelab) {
+        ga('create', gaCodelab, 'auto', {name: 'codelab'});
+      }
+
+      var gaView;
+      var parts = location.search.substring(1).split('&');
+      for (var i = 0; i < parts.length; i++) {
+        var param = parts[i].split('=');
+        if (param[0] === 'viewga') {
+          gaView = param[1];
+          break;
+        }
+      }
+      if (gaView && gaView !== gaCodelab) {
+        ga('create', gaView, 'auto', {name: 'view'});
+      }
+    })();
+  </script>
+
+</body>
+</html>
