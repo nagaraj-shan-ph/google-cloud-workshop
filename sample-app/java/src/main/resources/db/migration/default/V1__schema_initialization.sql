@@ -3,10 +3,10 @@ CREATE EXTENSION IF NOT EXISTS "plpgsql";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- SCHEMA
-CREATE SCHEMA IF NOT EXISTS lms;
+CREATE SCHEMA IF NOT EXISTS clms;
 
 -- TABLES
-CREATE TABLE lms.tenants (
+CREATE TABLE clms.tenants (
   id                   BIGSERIAL,
   created_at           TIMESTAMP,
   created_by           VARCHAR(50),
@@ -18,7 +18,7 @@ CREATE TABLE lms.tenants (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE lms.contacts (
+CREATE TABLE clms.contacts (
   id            BIGSERIAL,
   address1      VARCHAR(255),
   address2      VARCHAR(255),
@@ -41,7 +41,7 @@ CREATE TABLE lms.contacts (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE lms.contact_lists (
+CREATE TABLE clms.contact_lists (
   id         BIGSERIAL,
   created_at TIMESTAMP,
   created_by VARCHAR(255),
@@ -53,25 +53,25 @@ CREATE TABLE lms.contact_lists (
 );
 
 -- INDEXES
-CREATE INDEX "contacts_email_idx" ON lms.contacts USING btree (email);
-CREATE INDEX "contacts_first_name_idx" ON lms.contacts USING btree (first_name);
-CREATE INDEX "contacts_last_name_idx" ON lms.contacts USING btree (last_name);
-CREATE INDEX "contacts_list_id_idx" ON lms.contacts USING btree (list_id);
-CREATE INDEX "list_name_idx" ON lms.contact_lists USING btree (name);
+CREATE INDEX "contacts_email_idx" ON clms.contacts USING btree (email);
+CREATE INDEX "contacts_first_name_idx" ON clms.contacts USING btree (first_name);
+CREATE INDEX "contacts_last_name_idx" ON clms.contacts USING btree (last_name);
+CREATE INDEX "contacts_list_id_idx" ON clms.contacts USING btree (list_id);
+CREATE INDEX "list_name_idx" ON clms.contact_lists USING btree (name);
 
 -- CONSTRAINTS
-ALTER TABLE lms.contacts
+ALTER TABLE clms.contacts
   ADD CONSTRAINT FK_contacts_list_id FOREIGN KEY (list_id) REFERENCES contact_lists (id);
 
-ALTER TABLE lms.contacts ADD CONSTRAINT FK_contacts_tenant_id FOREIGN KEY (tenant_id) REFERENCES lms.tenants (id);
+ALTER TABLE clms.contacts ADD CONSTRAINT FK_contacts_tenant_id FOREIGN KEY (tenant_id) REFERENCES clms.tenants (id);
 
-ALTER TABLE lms.contacts
+ALTER TABLE clms.contacts
   ADD CONSTRAINT "contacts_email_list_id_unique_key" UNIQUE (email, list_id);
 
-ALTER TABLE lms.contact_lists
-  ADD CONSTRAINT FK_contacts_list_tenant_id FOREIGN KEY (tenant_id) REFERENCES lms.tenants (id);
+ALTER TABLE clms.contact_lists
+  ADD CONSTRAINT FK_contacts_list_tenant_id FOREIGN KEY (tenant_id) REFERENCES clms.tenants (id);
 
-ALTER TABLE lms.contact_lists
+ALTER TABLE clms.contact_lists
   ADD CONSTRAINT "lists_name_unique_key" UNIQUE (name);
 
 

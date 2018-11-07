@@ -1,7 +1,7 @@
 package org.imaginea.workshop.web.controller.list;
 
 import io.swagger.annotations.Api;
-import org.imaginea.workshop.database.lms.model.ContactList;
+import org.imaginea.workshop.database.clms.model.ContactList;
 import org.imaginea.workshop.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

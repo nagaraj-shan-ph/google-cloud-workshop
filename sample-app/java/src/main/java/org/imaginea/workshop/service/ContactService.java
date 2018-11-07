@@ -1,6 +1,6 @@
 package org.imaginea.workshop.service;
 
-import org.imaginea.workshop.database.lms.model.Contact;
+import org.imaginea.workshop.database.clms.model.Contact;
 import org.springframework.data.domain.Page;
 
 public interface ContactService {

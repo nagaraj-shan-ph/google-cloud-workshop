@@ -3,9 +3,7 @@ package org.imaginea.workshop.service.impl;
 import static de.bytefish.pgbulkinsert.util.PostgreSqlUtils.getPGConnection;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import de.bytefish.pgbulkinsert.PgBulkInsert;
@@ -22,7 +20,7 @@ import javax.sql.DataSource;
 import org.imaginea.workshop.database.TenantContextHolder;
 import org.imaginea.workshop.database.admin.model.Tenant;
 import org.imaginea.workshop.database.admin.repository.TenantRepository;
-import org.imaginea.workshop.database.lms.model.Contact;
+import org.imaginea.workshop.database.clms.model.Contact;
 import org.imaginea.workshop.service.ContactsBulkImportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

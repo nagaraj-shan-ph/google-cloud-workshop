@@ -5,7 +5,7 @@ Configuration:
   Properties:
     Property:
       name: logPath
-      value: /var/log/lms
+      value: /var/log/clms
 
   Appenders:
     Console:

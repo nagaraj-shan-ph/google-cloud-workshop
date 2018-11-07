@@ -52,20 +52,9 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
 }
 
-task sourcesJar(type: Jar) {
-    from project.sourceSets.main.allSource
-    classifier = 'sources'
-}
-
-task testJar(type: Jar, dependsOn: testClasses) {
-    classifier = 'test'
-    from sourceSets.test.output
-}
 
 artifacts {
     archives jar
-    archives sourcesJar
-    archives testJar
 }
 
 publishing {
@@ -73,7 +62,6 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId jar.baseName
             from components.java
-            artifact(sourcesJar) { classifier = 'sources' }
             artifact(javadocJar) { // (3)
                 classifier = 'javadoc'
             }

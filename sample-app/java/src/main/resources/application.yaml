@@ -10,13 +10,13 @@ logging:
       flywaydb: INFO
 server.connection-timeout: -1
 server:
-  port: 8090
+  port: 8080
   servlet:
     context-path: /
 application:
   basePath: /api
-  uploadService:
-    bucketName: contacts-lms
+  storage:
+    bucket: contacts-clms
 spring:
   datasource:
     driverClassName: org.postgresql.Driver

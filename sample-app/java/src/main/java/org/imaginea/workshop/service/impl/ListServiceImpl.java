@@ -2,8 +2,8 @@ package org.imaginea.workshop.service.impl;
 
 import java.util.function.Supplier;
 import org.imaginea.workshop.annotations.CurrentTenant;
-import org.imaginea.workshop.database.lms.model.ContactList;
-import org.imaginea.workshop.database.lms.repository.ContactListRepository;
+import org.imaginea.workshop.database.clms.model.ContactList;
+import org.imaginea.workshop.database.clms.repository.ContactListRepository;
 import org.imaginea.workshop.exception.NotFoundException;
 import org.imaginea.workshop.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;

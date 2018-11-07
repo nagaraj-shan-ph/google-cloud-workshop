@@ -29,7 +29,7 @@ public class GCSStorageService implements StorageService {
   @Autowired
   private Storage storage;
 
-  @Value("${application.uploadService.bucketName:sl-lms}")
+    @Value("${application.storage .bucket:sl-clms}")
   private String bucketName;
 
   @Override

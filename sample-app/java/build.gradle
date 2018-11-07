@@ -5,8 +5,6 @@ plugins {
 apply plugin: 'org.springframework.boot'
 
 apply from: file('./gradle/convention.gradle')
-apply from: file('./gradle/check.gradle')
-apply from: file('./gradle/coverage.gradle')
 apply from: file('./gradle/docker.gradle')
 
 configurations.all {

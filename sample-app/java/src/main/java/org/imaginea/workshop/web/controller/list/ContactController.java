@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.imaginea.workshop.database.lms.model.Contact;
+import org.imaginea.workshop.database.clms.model.Contact;
 import org.imaginea.workshop.service.ContactService;
 import org.imaginea.workshop.service.ListService;
 import org.imaginea.workshop.service.StorageService;

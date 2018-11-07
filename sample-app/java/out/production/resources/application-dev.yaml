@@ -1,4 +1,0 @@
-logging.level.org.imaginea: DEBUG
-spring:
-  profiles:
-    active: dev
