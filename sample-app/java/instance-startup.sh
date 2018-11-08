@@ -8,7 +8,7 @@ SQL_INSTANCE=$(curl -s "http://metadata.google.internal/computeMetadata/v1/insta
 echo "Project ID: ${PROJECTID} Bucket: ${BUCKET}"
 
 # Get the files we need
-  gsutil cp gs://${BUCKET}/demo.jar .
+gsutil cp gs://${BUCKET}/demo.jar .
 
 # Install dependencies
 sudo apt-get update
@@ -24,7 +24,8 @@ chmod +x cloud_sql_proxy
 # Create Directory for Cloud Sql Proxy Connection
 mkdir cloudsql; sudo chmod 777 cloudsql
 
-export APPLICATION_STORAGE  _BUCKET = ${BUCKET}
+export APPLICATION_STORAGE_BUCKET="${BUCKET}"
+
 # Start the Cloud SQL Proxy in the background
 ./cloud_sql_proxy -dir=/cloudsql -instances=${SQL_INSTANCE}=tcp:5432 &
 

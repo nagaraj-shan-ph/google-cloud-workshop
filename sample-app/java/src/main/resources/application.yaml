@@ -16,7 +16,7 @@ server:
 application:
   basePath: /api
   storage:
-    bucket: contacts-clms
+    bucket: contacts-clms   
 spring:
   datasource:
     driverClassName: org.postgresql.Driver

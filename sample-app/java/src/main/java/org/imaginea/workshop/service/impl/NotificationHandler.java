@@ -28,7 +28,7 @@ public class NotificationHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(NotificationHandler.class);
 
-  @Value("${application.pubsub.subscription.upload:clms-fileupload}")
+  @Value("${application.pubsub.subscription.upload:file-upload-subscription}")
   private String uploadSubscriptionName;
 
   @Autowired

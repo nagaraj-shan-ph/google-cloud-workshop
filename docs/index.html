@@ -101,13 +101,13 @@ project = &lt;PROJECT_ID&gt;</pre>
 <p><img style="max-width: 480.00px" src="img/d32055a3e09ddebe.png"></p>
 <p>Additionally, you can configure the machine type and storage capacity and other database flags by clicking on <strong>show configuration options. </strong>Once you are done with </p>
 <p><img style="max-width: 494.00px" src="img/bc6a1114765cc1c6.png"></p>
-<p><img style="max-width: 478.00px" src="img/f87f2dccba93bdcd.png"><img style="max-width: 476.00px" src="img/2e1e8cc82f3ed69b.png"></p>
+<p><img style="max-width: 470.00px" src="img/89941cd1d14ce8b8.png"></p>
 <p><strong>Click on Create. </strong></p>
 <p><img style="max-width: 483.00px" src="img/cf0436463437b61c.png"></p>
 <p>You will be taken to the <em>Instances</em> page, where you will see your new instance with a spinner on the left, indicating it is still being created:</p>
-<p><img style="max-width: 624.00px" src="img/cfd34f58e5c91832.png"></p>
+<p><img style="max-width: 624.00px" src="img/49f58f841cc7397d.png"></p>
 <p>In two or three minutes, the instance will be available, and a green checkmark will replace the blue spinner. Make sure to refresh the page from time to time:</p>
-<p><img style="max-width: 631.50px" src="img/8b7275175ede9a71.png"></p>
+<p><img style="max-width: 624.00px" src="img/517f792482e09ef4.png"></p>
 <p><strong>Your Cloud SQL instance is now ready to use.</strong></p>
 <h2>Connection Options</h2>
 <p>Currently, there are 3 ways of connecting to Cloud SQL:</p>
@@ -162,19 +162,24 @@ SELECT * FROM guestbook;
 
 chmod +x cloud_sql_proxy</pre>
 <h3>Step 2 - Creating Service Account for use on the Proxy</h3>
-<p><a href="https://console.cloud.google.com/iam-admin/serviceaccounts/?authuser=1" target="_blank"><paper-button class="colored" raised>GO TO THE SERVICE ACCOUNTS PAGE</paper-button></a> If needed, select the project that contains your Cloud SQL instance. Click <strong>Create service account</strong>.</p>
-<p><img style="max-width: 624.00px" src="img/2ada90b116a952f6.png"></p>
+<p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select <strong>IAM &amp; ADMIN &gt; Service Accounts</strong>.</p>
+<p><img style="max-width: 470.00px" src="img/5ae27dd0ddcf4a3e.png"></p>
+<p>Click <strong>Create service account</strong>.</p>
+<p><img style="max-width: 624.00px" src="img/dce5e0d0db44ba5b.png"></p>
 <p>In the Create service account dialog, provide a descriptive name for the service account.</p>
-<p><img style="max-width: 624.00px" src="img/2d434ec7f757bb7.png"></p>
+<p><img style="max-width: 617.00px" src="img/82e7c81042a98360.png"></p>
 <p>    For <strong>Role</strong>, select one of the following roles:</p>
 <ul>
 <li><strong>Cloud SQL &gt; Cloud SQL Client</strong></li>
 <li><strong>Cloud SQL &gt; Cloud SQL Editor</strong></li>
 <li><strong>Cloud SQL &gt; Cloud SQL Admin</strong></li>
 </ul>
-<p><img style="max-width: 624.00px" src="img/c67de0abdb204975.png"></p>
+<p><img style="max-width: 624.00px" src="img/ee2422455971fa9f.png"></p>
+<p><img style="max-width: 574.00px" src="img/63f53007c29ff608.png"></p>
 <p>Click <strong>Create key</strong> and Choose JSON in the dialog. Click on create  and download the JSON file. Keep the file Securely.</p>
-<p><img style="max-width: 523.00px" src="img/177e121c0fd67d67.png"></p>
+<p><img style="max-width: 566.00px" src="img/87bc52977280b158.png"></p>
+<p><img style="max-width: 572.00px" src="img/e188fc4602c9e800.png"></p>
+<p><img style="max-width: 624.00px" src="img/2e673d5f9a6fd6c8.png"></p>
 <p>Click <strong>Create</strong>.</p>
 <h3>Step 3 - Start the proxy</h3>
 <p>Run the following command in your terminal to start the proxy.</p>
@@ -191,18 +196,19 @@ chmod +x cloud_sql_proxy</pre>
 <h2>Bucket Creation Using Console</h2>
 <h3>Step 1</h3>
 <p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select Storage &gt; Browser in the Storage subsection</p>
-<p><img style="max-width: 439.00px" src="img/8cd8f6b781e5f497.png"></p>
+<p><img style="max-width: 545.00px" src="img/5d6bf7f220e86e91.png"></p>
 <h3>Step 2</h3>
 <p>Click on<strong> Create Bucket</strong></p>
 <h3>Step 3</h3>
 <p>Name your bucket, it must be unique across all of GCP, not just your project. Then select Regional as the default storage class. Choose <code>asia-south1</code> as your Region.</p>
-<p><img style="max-width: 624.00px" src="img/4d680e1cbcabbf0f.png"></p>
+<p><img style="max-width: 624.00px" src="img/6d8bb5930c6e4d61.png"></p>
 <h3>Step 4</h3>
 <p>You have now created your first bucket! Let&#39;s upload some files. You can upload whatever files you want to use.</p>
-<p><img style="max-width: 624.00px" src="img/2287910c2cb582e.png"></p>
+<p><img style="max-width: 624.00px" src="img/d98c714a2ec93de1.png"></p>
 <h3>Step 5</h3>
 <p>You can Share your file with a specific user or Group or Public. By editing permission of the file you can do this. </p>
-<p><img style="max-width: 624.00px" src="img/2156c70ceee5b462.png"></p>
+<p><img style="max-width: 624.00px" src="img/48b678e420113f94.png"></p>
+<p><img style="max-width: 500.00px" src="img/b7dcbc905379a5b9.png"></p>
 <h2>Create a second GCS bucket using the command line tool, gsutil</h2>
 <p>To create a second GCS bucket using the gsutil command use your local terminal environment with the GCP SDK installed, or use the Google Cloud Shell which has all of the SDK tools pre-installed.</p>
 <h3>Step 1</h3>
@@ -228,17 +234,17 @@ Bucket Creation</pre>
 <p>Messaging is a technology that enables high-speed, asynchronous, program-to-program communication with reliable delivery. Programs communicate by sending packets of data called messages to each other. Google Cloud Pub/Sub is a fully-managed real-time messaging service that allows you to send and receive messages between independent applications.</p>
 <h2>Create a topic and subscription Using Console</h2>
 <p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select Pub/Sub in the Bigdata subsection</p>
-<p><img style="max-width: 428.00px" src="img/bf7038a0cdd2e3b5.png"></p>
+<p><img style="max-width: 480.00px" src="img/873d80f67617ea21.png"></p>
 <p>Click <strong>Enable API</strong></p>
-<h3><img style="max-width: 446.00px" src="img/3b618a43a9adf06.png"></h3>
+<h3><img style="max-width: 483.00px" src="img/c4c32aa8505dc465.png"></h3>
 <p>Click <strong>Create Topic</strong></p>
-<p><img style="max-width: 443.00px" src="img/67181485b4a0abd7.png"></p>
+<p><img style="max-width: 453.00px" src="img/f0c3928c7eb69963.png"></p>
 <p>Type the name of the topic and then click <strong>Create</strong>.</p>
-<p><img style="max-width: 506.00px" src="img/b23dee499fd3c810.png"></p>
+<p><img style="max-width: 510.00px" src="img/3dd18d3965404b15.png"></p>
 <p>After the topic is created, remain on the Topics page. Look for the topic you just created, press the three vertical dots at the end of the line and click <strong>New Subscription</strong>.</p>
-<p><img style="max-width: 624.00px" src="img/b492d38fc6e85c4b.png"></p>
+<p><img style="max-width: 624.00px" src="img/fdb6ffcba1bf276e.png"></p>
 <p>Type the subscription name in the text box and click <strong>Create</strong>.</p>
-<p><img style="max-width: 481.00px" src="img/f0d7967759b4479c.png"></p>
+<p><img style="max-width: 519.00px" src="img/3055bf45a18e3554.png"></p>
 <h2>Create a topic and subscription Using Cloud Shell</h2>
 <p>From the te you just set up, create a topic.</p>
 <pre>gcloud pubsub topics create &lt;Topic Name&gt;</pre>
@@ -246,9 +252,9 @@ Bucket Creation</pre>
 <pre>gcloud beta pubsub subscriptions create &lt;Subscription Name&gt; --topic &lt;Topic Name&gt;</pre>
 <h2>Publish Message</h2>
 <p>In the Cloud Pub/Sub topics page, Look for the topic you just created,  press the three vertical dots at the end of the line and click <strong>Publish Message</strong></p>
-<p><img style="max-width: 624.00px" src="img/b6b08f0e9da84cf1.png"></p>
+<p><img style="max-width: 624.00px" src="img/97b33e20f46ebb76.png"></p>
 <p>Enter <code>Hello World</code> in the <strong>Message</strong> field and Click <strong>Publish</strong></p>
-<p><img style="max-width: 468.00px" src="img/95f8b2fd3fdaef02.png"></p>
+<p><img style="max-width: 492.00px" src="img/a9f0647e4c2d0a22.png"></p>
 <h2>Pull Messages</h2>
 <p>Open the Cloud Shell and Enter the following</p>
 <pre>gcloud pubsub subscriptions pull --auto-ack &lt;Subscription Name&gt;</pre>
@@ -258,6 +264,250 @@ Bucket Creation</pre>
 ├─────────────┼─────────────────┼────────────┤
 │ Hello World │ 287821426252241 │            │
 └─────────────┴─────────────────┴────────────┘</pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Developing, Deploying and Monitoring in the Cloud" duration="0">
+        <h2>Introduction</h2>
+<p>In this workshop, you will learn how to:</p>
+<ul>
+<li>Deploy your app to Google Compute Engine instances</li>
+<li>Set up load balancing and autoscaling for your app</li>
+</ul>
+<h2>Creating a build to upload to Cloud Storage</h2>
+<p>For the purposes of this workshop, you can build the release locally and upload it to Cloud Storage:</p>
+<ol type="1" start="1">
+<li>Click the following link to download all the code for this workshop:</li>
+</ol>
+<p><a href="https://github.com/nagaraj-shan-ph/google-cloud-workshop/archive/master.zip" target="_blank"><paper-button class="colored" raised><iron-icon icon="file-download"></iron-icon>Download Zip</paper-button></a></p>
+<ol type="1" start="2">
+<li>Extract the source code.</li>
+<li>Open your terminal and go to the extracted folder</li>
+<li>Goto <strong>sample-app-&gt;java</strong></li>
+<li>Build the Spring Boot application by running the following command from the root of your application folder</li>
+</ol>
+<pre>gradle clean build -x text</pre>
+<ol type="1" start="6">
+<li>Upload the app to Cloud Storage</li>
+</ol>
+<pre>gsutil cp build/libs.* gs://&lt;BucketName&gt;/demo.jar</pre>
+<h2>Deploying your application to a single instance</h2>
+<p>Compute Engine instances might provide a startup script that is executed whenever the instance is started or restarted. You use this to install and start your app.</p>
+<h2>Enable required API&#39;s</h2>
+<p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select <strong>APIs &amp; Services &gt; Dashboard</strong>.</p>
+<p><img style="max-width: 441.00px" src="img/2aa17b20937abbc.png"></p>
+<p>In the dashboard page Click on <strong>ENABLE APIS AND SERVICES</strong></p>
+<p><img style="max-width: 488.00px" src="img/4c7e9f5e6684ccc3.png"></p>
+<p>In the result window search for Following APIs and Enable it.</p>
+<ol type="1" start="1">
+<li>Compute Engine API</li>
+<li>Cloud SQL Admin API</li>
+<li>Cloud Pub/Sub API</li>
+<li>Google Cloud Storage</li>
+<li>Google Cloud Storage JSON API</li>
+</ol>
+<h3>Create a startup script</h3>
+<p>Create and run your own startup scripts on your virtual machines to perform automated tasks every time your instance boots up. Create a file called <code>instance-startup.sh</code> in your application&#39;s root directory and copy the following content to it:</p>
+<pre>#!/bin/sh
+
+# Set the metadata server to the get projct id
+PROJECTID=$(curl -s &#34;http://metadata.google.internal/computeMetadata/v1/project/project-id&#34; -H &#34;Metadata-Flavor: Google&#34;)
+BUCKET=$(curl -s &#34;http://metadata.google.internal/computeMetadata/v1/instance/attributes/BUCKET&#34; -H &#34;Metadata-Flavor: Google&#34;)
+SQL_INSTANCE=$(curl -s &#34;http://metadata.google.internal/computeMetadata/v1/instance/attributes/SQL_INSTANCE&#34; -H &#34;Metadata-Flavor: Google&#34;)
+
+echo &#34;Project ID: ${PROJECTID} Bucket: ${BUCKET}&#34;
+
+# Get the files we need
+  gsutil cp gs://${BUCKET}/demo.jar .
+
+# Install dependencies
+sudo apt-get update
+sudo apt-get -y --force-yes install openjdk-8-jdk
+
+# Make Java 8 default
+sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
+# Download Cloud Proxy and make it executable
+wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+chmod +x cloud_sql_proxy
+
+# Create Directory for Cloud Sql Proxy Connection
+mkdir cloudsql; sudo chmod 777 cloudsql
+
+export APPLICATION_STORAGE  _BUCKET = ${BUCKET}
+# Start the Cloud SQL Proxy in the background
+./cloud_sql_proxy -dir=/cloudsql -instances=${SQL_INSTANCE}=tcp:5432 &amp;
+
+# Start server
+java -jar demo.jar</pre>
+<h3>Create and configure a Compute Engine instance Using Console</h3>
+<p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select Compute Engine in the Compute subsection.</p>
+<p><img style="max-width: 535.00px" src="img/64591ed4e47d4f6b.png"></p>
+<p>Click <strong>Create. </strong>It will take you to the Create instance Page</p>
+<p><img style="max-width: 427.00px" src="img/3a41d1fdd824ed4d.png"></p>
+<p>Here you must specify a name for your instance.  Also you can select the Region, Zone, Machine Type, Boot Disk and Firewall options. And then expand the <strong>Management, Security.. </strong>link.</p>
+<p><img style="max-width: 432.00px" src="img/3e72183fd6a68ef9.png"></p>
+<p>Configure the following values under Mangement &gt; Metadata section</p>
+<ol type="1" start="1">
+<li><strong>startup-script-url</strong>=gs://&lt;Bucket Name&gt;/instance-startup.sh</li>
+<li><strong>BUCKET</strong>=&lt;Bucket Name&gt;</li>
+<li><strong>SQL_INSTANCE</strong>=&lt;SQL Instance Connection Name&gt;</li>
+</ol>
+<ol type="1" start="1">
+<li>You can get this value Under <strong>CloudSQL&gt; Instance&gt; Connect to this Instance</strong></li>
+</ol>
+<p><img style="max-width: 481.00px" src="img/3a39f6ba58abcebd.png"></p>
+<p>Once everything configured Click <strong>Create.</strong></p>
+<p><img style="max-width: 470.00px" src="img/f84169fafb26e272.png"></p>
+<p>This will take you to the Instances Page and you can see your instance is getting created. Once its create you can see greed tick and your Public and Private IP of the Instance. </p>
+<p><img style="max-width: 624.00px" src="img/2117c91aeab0a725.png"></p>
+<p>Copy the External IP and We can you it once our Firewall rule is enabled.</p>
+<h3>Create a firewall rule to allow traffic to your instance:</h3>
+<p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select <strong>VPC network &gt; Firewall </strong>rules  in the <strong>NETWORKING</strong> subsection.</p>
+<p><img style="max-width: 469.00px" src="img/560ef9d35da42fe4.png"></p>
+<p>In the next Page Click <strong>CREATE FIREWALL RULE.</strong></p>
+<p><img style="max-width: 624.00px" src="img/ae7f46b889700767.png"></p>
+<p>Enter the firewall rule name.</p>
+<p><img style="max-width: 517.00px" src="img/985c3794edfe0d0f.png"></p>
+<p>Configure Target tags as <strong><code>http-server</code></strong><strong> </strong>and Source Ip ranges as <strong><code>0.0.0.0/0.</code></strong> In Protocols and ports select <code>tcp</code> and five value as <code>8080</code>. </p>
+<p><img style="max-width: 496.00px" src="img/f330322799983114.png"></p>
+<p>Click <strong>Create.</strong></p>
+<p>To see your application running, visit <code>http://${IP_ADDRESS}:8080/swagger-ui.html</code>, where <code>${IP_ADDRESS}</code> is the external address you obtained above.</p>
+<h3>Create and configure a Compute Engine instance Using GCLOUD</h3>
+<p>To create a Compute Engine instance, perform the following steps:</p>
+<ol type="1" start="1">
+<li>Create an instance by running the following command:</li>
+</ol>
+<pre>gcloud compute create demo-instance \
+ --image-project=ubuntu-os-cloud
+ --image-family ubuntu-1604-lts \
+--zone=asia-south1-b \
+--machine-type=n1-standard-1 \
+--metadata=BUCKET=imaginea-gc-workshop,SQL_INSTANCE=imaginea-gc-workshop:asia-south1:imaginea-gc-workshop,startup-script-url=gs://imaginea-gc-workshop/instance-startup.sh \
+--scopes=userinfo-email,cloud-platform \
+--tags=http-server</pre>
+<ol type="1" start="2">
+<li>This command creates a new instance named <code>demo-instance</code>, grants it access to Cloud Platform services, and provides your startup script. It also sets an instance attribute with the Bucket name.</li>
+<li>Check the progress of instance creation:</li>
+</ol>
+<pre>gcloud compute instances get-serial-port-output demo-instance \
+    --zone asia-south-b</pre>
+<ol type="1" start="4">
+<li>If the startup script has completed, this command returns <code>Finished running startup scripts.</code></li>
+<li>Create a firewall rule to allow traffic to your instance:</li>
+</ol>
+<pre>gcloud compute firewall-rules create default-allow-http-8080 \
+    --allow tcp:8080 \
+    --source-ranges 0.0.0.0/0 \
+    --target-tags http-server \
+    --description &#34;Allow port 8080 access to http-server&#34;</pre>
+<ol type="1" start="6">
+<li>Get the external IP address of your instance:</li>
+</ol>
+<pre>gcloud compute instances list</pre>
+<ol type="1" start="7">
+<li>To see your application running, visit <code>http://${IP_ADDRESS}:8080/message</code>, where <code>${IP_ADDRESS}</code> is the external address you obtained above.</li>
+</ol>
+<h2>Horizontal scaling with multiple instances</h2>
+<p>Compute Engine can easily scale horizontally. By using a managed instance group and the Compute Engine autoscaler, Compute Engine can automatically create new instances of your application when needed, and shut down instances when demand is low. You can set up an HTTP load balancer to distribute traffic to the instances in a managed instance group.</p>
+<h3>Create a managed instance group</h3>
+<p>A managed instance group is a group of homogeneous instances based on an instance template. In this section, you create a group of instances running your Spring Boot app.</p>
+<ol type="1" start="1">
+<li>Create an instance template:</li>
+</ol>
+<pre>        gcloud compute instance-templates create demo-template \
+        --image-project ubuntu-os-cloud \
+        --image-family ubuntu-1604-lts \
+        --zone asia-south1-b \
+        --machine-type n1-standard-1 \
+      --metadata BUCKET=imaginea-gc-workshop,SQL_INSTANCE=imaginea-gc-workshop:asia-south1:imaginea-gc-workshop,startup-script-url=gs://imaginea-gc-workshop/instance-startup.sh \
+        --scopes userinfo-email,cloud-platform \
+        --tags http-server</pre>
+<ol type="1" start="2">
+<li>Notice that the template provides most of the information needed to create instances.</li>
+<li>Next, create an instance group using the template:</li>
+</ol>
+<pre>    gcloud compute instance-groups managed create demo-group \
+    --base-instance-name demo-group \
+    --size 2 \
+    --template demo-template \
+    --zone asia-south1-b</pre>
+<ol type="1" start="4">
+<li>The <code>size</code> parameter specifies the number of instances in the group. You can set it to a different value as needed.</li>
+<li>Get the names and external IP addresses of the created instances:</li>
+</ol>
+<pre>     gcloud compute instances list</pre>
+<ol type="1" start="6">
+<li>The managed instances in the group have names that start with the base-instance-name, such as <code>demo-group.</code> You can use the names to check the progress of instance creation as you did above with a single instance, and then you can use the IP addresses to see your application running on port 8080 of each instance.</li>
+</ol>
+<h3>Create a load balancer</h3>
+<p>In this section, you create a load balancer to direct traffic automatically to available instances in the group:</p>
+<ol type="1" start="1">
+<li>Create a health check. The load balancer uses a health check to determine which instances are capable of serving traffic. The health check simply ensures that the server responds:</li>
+</ol>
+<pre>  gcloud compute http-health-checks create demo-health-check \
+    --request-path /health \
+    --port 8080</pre>
+<ol type="1" start="2">
+<li>Create a named port. The HTTP load balancer directs traffic to a port named http, so we map that name to port 8080 to indicate that the instances listen on that port:</li>
+</ol>
+<pre>  gcloud compute instance-groups managed set-named-ports demo-group \
+    --named-ports http:8080 \
+    --zone asia-south1-b</pre>
+<ol type="1" start="3">
+<li>Create a backend service. The backend service is the &#34;target&#34; for load-balanced traffic. It defines the instance group to which traffic should be directed, and which health check to use:</li>
+</ol>
+<pre>  gcloud compute backend-services create demo-service \
+    --http-health-checks demo-health-check \
+    --global</pre>
+<ol type="1" start="4">
+<li>Add your instance group to the backend service:</li>
+</ol>
+<pre>  gcloud compute backend-services add-backend demo-service \
+    --instance-group demo-group \
+    --global \
+    --instance-group-zone asia-south1-b</pre>
+<ol type="1" start="5">
+<li>Create a URL map. This defines which URLs should be directed to which backend services. In this sample, all traffic is served by one backend service. If you want to load balance requests between multiple regions or groups, you can create multiple backend services:</li>
+</ol>
+<pre>  gcloud compute url-maps create demo-service-map \
+    --default-service demo-service</pre>
+<ol type="1" start="6">
+<li>Create a proxy that receives traffic and forwards it to backend services using the URL map:</li>
+</ol>
+<pre>  gcloud compute target-http-proxies create demo-service-proxy \
+    --url-map demo-service-map</pre>
+<ol type="1" start="7">
+<li>Create a global forwarding rule. This ties a public IP address and port to a proxy:</li>
+</ol>
+<pre>  gcloud compute forwarding-rules create demo-http-rule \
+    --target-http-proxy demo-service-proxy \
+    --ports 80 \
+    --global</pre>
+<ol type="1" start="8">
+<li>You are now done configuring the load balancer. It might take a few minutes for it to initialize and get ready to receive traffic. You can check on its progress by running the following command:</li>
+</ol>
+<pre>  gcloud compute backend-services get-health demo-service \
+    --global</pre>
+<ol type="1" start="9">
+<li>Continue checking until it lists at least one instance in state HEALTHY.</li>
+<li>Get the forwarding IP address for the load balancer:</li>
+</ol>
+<pre>  gcloud compute forwarding-rules list --global</pre>
+<ol type="1" start="11">
+<li>Your forwarding-rules IP address is in the IP_ADDRESS column.</li>
+<li>You can now enter the IP address into your browser and view your load-balanced and autoscaled app running on port 80!</li>
+</ol>
+<h3>Configure an autoscaler</h3>
+<p>As traffic to your site changes, you can adjust the instance group size manually, or you can configure an autoscaler to adjust the size automatically in response to traffic demands.</p>
+<p>Create an autoscaler to monitor utilization and automatically create and delete instances up to a maximum of 10:</p>
+<pre>  gcloud compute instance-groups managed set-autoscaling demo-group \
+    --max-num-replicas 10 \
+    --target-load-balancing-utilization 0.6 \
+    --zone asia-south1-b</pre>
+<p>After a few minutes, if you send traffic to the load balancer, you might see that additional instances have been added to the instance group.</p>
+<p>A wide variety of autoscaling policies are available to maintain target CPU utilization and request-per-second rates across your instance groups. For more information, refer to Compute Engine&#39;s <a href="https://cloud.google.com/compute/docs/autoscaler/" target="_blank">autoscaler documentation</a>.</p>
 
 
       </google-codelab-step>

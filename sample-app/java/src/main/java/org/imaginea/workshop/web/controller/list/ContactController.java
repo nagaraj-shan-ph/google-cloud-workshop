@@ -58,11 +58,6 @@ public class ContactController {
     return ResponseEntity.ok(contactService.findByListIdAndId(listId, id));
   }
 
-  @PutMapping(path = {"message/{id}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-  public ResponseEntity<Contact> sendMessage(@PathVariable("id") String message) {
-    return ResponseEntity.ok().build();
-  }
-
   @PutMapping(path = {"/{id}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<Contact> update(@PathVariable("listId") Long listId, @PathVariable("id") Long id, @RequestBody Contact contact) {
     return ResponseEntity.ok(contactService.update(listId, id, contact));
