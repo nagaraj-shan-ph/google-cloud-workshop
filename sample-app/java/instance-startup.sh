@@ -24,6 +24,12 @@ chmod +x cloud_sql_proxy
 # Create Directory for Cloud Sql Proxy Connection
 mkdir cloudsql; sudo chmod 777 cloudsql
 
+service_name=clms
+sudo mkdir -p /var/log/${service_name}
+sudo touch /var/log/${service_name}/app.log
+sudo touch /var/log/${service_name}/${service_name}-stderr.log
+sudo chown -R $USER:$USER /var/log/${service_name}
+
 export APPLICATION_STORAGE_BUCKET="${BUCKET}"
 
 # Start the Cloud SQL Proxy in the background

@@ -9,7 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.imaginea.workshop.database.TenantEntity;
+import org.imaginea.workshop.database.BaseEntity;
 
 /**
  * The type Contact.
@@ -17,7 +17,7 @@ import org.imaginea.workshop.database.TenantEntity;
 @Entity
 @Table(name = "contacts")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Contact extends TenantEntity {
+public class Contact extends BaseEntity {
 
   @JsonProperty("First Name")
   @Column(name = "first_name")

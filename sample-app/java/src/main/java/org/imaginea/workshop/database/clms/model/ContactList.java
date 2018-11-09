@@ -9,14 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.imaginea.workshop.database.TenantEntity;
+import org.imaginea.workshop.database.BaseEntity;
 
 /**
  * The type Contact list.
  */
 @Entity
 @Table(name = "contact_lists")
-public class ContactList extends TenantEntity {
+public class ContactList extends BaseEntity {
 
   @Column(name = "name", nullable = false)
   private String name;

@@ -13,6 +13,8 @@ import org.imaginea.workshop.database.clms.model.Contact;
 import org.imaginea.workshop.service.ContactService;
 import org.imaginea.workshop.service.ListService;
 import org.imaginea.workshop.service.StorageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "${application.basePath}/lists/{listId}/contacts", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(tags = "ListContacts", description = "List Contacts")
 public class ContactController {
+
+  private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
   @Autowired
   private ContactService contactService;
@@ -69,7 +73,7 @@ public class ContactController {
     return ResponseEntity.noContent().build();
   }
 
-  @ApiImplicitParams({@ApiImplicitParam(name = "file", value = "Contacts Csv File", dataType = "file", paramType = "formData")})
+  @ApiImplicitParams({@ApiImplicitParam(name = "file", value = "Contacts Csv File", dataType = "__file", paramType = "formData")})
   @PostMapping(path = "/bulkCreate", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {"multipart/form-data"})
   ResponseEntity<?> upload(@PathVariable("listId") Long listId, HttpServletRequest request) {
     listService.findById(listId);
@@ -87,15 +91,15 @@ public class ContactController {
         String name = item.getFieldName();
         InputStream stream = item.openStream();
         if (!item.isFormField()) {
-          System.out.println("File field " + name + " with file name " + item.getName() + " detected.");
+          logger.info("File field " + name + " with file name " + item.getName() + " detected.");
           String uploadUrl = storageService.upload(stream, item.getName(), listId.toString());
-          System.out.println(uploadUrl);
+          logger.info(uploadUrl);
         }
       }
     } catch (Exception e) {
       throw new RuntimeException("Upload failed", e);
     }
-    System.out.println("Total time taken to upload and process data:" + ((Instant.now().toEpochMilli() - start)) + "Millis");
+    logger.info("Total time taken to upload and process data:" + ((Instant.now().toEpochMilli() - start)) + "Millis");
     return ResponseEntity.ok().build();
   }
 }

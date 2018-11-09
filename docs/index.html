@@ -15,6 +15,9 @@
       font-family: "Roboto",sans-serif;
       background: var(--google-codelab-background, #F8F9FA);
     }
+    img{
+      margin: 3em;
+    }
   </style>
   
 </head>
@@ -246,7 +249,7 @@ Bucket Creation</pre>
 <p>Type the subscription name in the text box and click <strong>Create</strong>.</p>
 <p><img style="max-width: 519.00px" src="img/3055bf45a18e3554.png"></p>
 <h2>Create a topic and subscription Using Cloud Shell</h2>
-<p>From the te you just set up, create a topic.</p>
+<p>From the terminal you just set up, create a topic.</p>
 <pre>gcloud pubsub topics create &lt;Topic Name&gt;</pre>
 <p>Create a subscription attached to this topic:</p>
 <pre>gcloud beta pubsub subscriptions create &lt;Subscription Name&gt; --topic &lt;Topic Name&gt;</pre>
@@ -259,11 +262,13 @@ Bucket Creation</pre>
 <p>Open the Cloud Shell and Enter the following</p>
 <pre>gcloud pubsub subscriptions pull --auto-ack &lt;Subscription Name&gt;</pre>
 <p>The message you sent appears in the DATA field of the <strong>command output.</strong></p>
-<pre>┌─────────────┬─────────────────┬────────────┐
+<pre>
+┌─────────────┬─────────────────┬────────────┐
 │     DATA    │    MESSAGE_ID   │ ATTRIBUTES │
 ├─────────────┼─────────────────┼────────────┤
 │ Hello World │ 287821426252241 │            │
-└─────────────┴─────────────────┴────────────┘</pre>
+└─────────────┴─────────────────┴────────────┘
+</pre>
 
 
       </google-codelab-step>
@@ -287,11 +292,16 @@ Bucket Creation</pre>
 <li>Goto <strong>sample-app-&gt;java</strong></li>
 <li>Build the Spring Boot application by running the following command from the root of your application folder</li>
 </ol>
-<pre>gradle clean build -x text</pre>
+<pre>./gradlew clean build -x text</pre>
 <ol type="1" start="6">
 <li>Upload the app to Cloud Storage</li>
 </ol>
 <pre>gsutil cp build/libs.* gs://&lt;BucketName&gt;/demo.jar</pre>
+<ol type="1" start="7">
+<li>Upload the startup script to Cloud storage</li>
+</ol>
+<pre>gsutil cp instance-startup.sh gs://&lt;BucketName&gt;/demo.jar</pre>
+<p><img style="max-width: 624.00px" src="img/ac83b4cd41baa852.png"></p>
 <h2>Deploying your application to a single instance</h2>
 <p>Compute Engine instances might provide a startup script that is executed whenever the instance is started or restarted. You use this to install and start your app.</p>
 <h2>Enable required API&#39;s</h2>
@@ -341,6 +351,16 @@ export APPLICATION_STORAGE  _BUCKET = ${BUCKET}
 
 # Start server
 java -jar demo.jar</pre>
+<h3>Create Pub/Sub topic and Storage Notification For Demo Application</h3>
+<p>From the terminal execute following scripts.</p>
+<pre># Create Topic for File Upload Notification
+gcloud pubsub topics create clms-file-upload
+
+# Create Subscription for listening messages in the file upload topic
+gcloud beta pubsub subscriptions create file-upload-subscription --topic clms-file-upload
+
+# Create notification in the bucket to publish message to the top on New object creation
+gsutil notification create -f json -e OBJECT_FINALIZE gs://&lt;Bucket Name&gt;</pre>
 <h3>Create and configure a Compute Engine instance Using Console</h3>
 <p>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select Compute Engine in the Compute subsection.</p>
 <p><img style="max-width: 535.00px" src="img/64591ed4e47d4f6b.png"></p>
@@ -409,14 +429,111 @@ java -jar demo.jar</pre>
 <ol type="1" start="7">
 <li>To see your application running, visit <code>http://${IP_ADDRESS}:8080/message</code>, where <code>${IP_ADDRESS}</code> is the external address you obtained above.</li>
 </ol>
-<h2>Horizontal scaling with multiple instances</h2>
+<h2>Horizontal scaling with multiple instances using Cloud Shell</h2>
 <p>Compute Engine can easily scale horizontally. By using a managed instance group and the Compute Engine autoscaler, Compute Engine can automatically create new instances of your application when needed, and shut down instances when demand is low. You can set up an HTTP load balancer to distribute traffic to the instances in a managed instance group.</p>
+<ol type="1" start="1">
+<li>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select <strong>Compute Engine &gt; Instance templates</strong> in the <strong>Compute</strong> subsection.</li>
+</ol>
+<p><img style="max-width: 464.00px" src="img/b720a46aeea68ed9.png"></p>
+<ol type="1" start="2">
+<li>Click <strong>Create instance template.</strong></li>
+</ol>
+<p><img style="max-width: 434.00px" src="img/8bda84cc732d2721.png"></p>
+<ol type="1" start="3">
+<li>Specify the name of the template, Select Boot disk, Service Accounts and Access Scopes</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/fb1ab73d6fdf068d.png"></p>
+<ol type="1" start="4">
+<li>Configure the following values under Mangement &gt; Metadata section</li>
+</ol>
+<ol type="1" start="1">
+<li><strong>startup-script-url</strong>=gs://&lt;Bucket Name&gt;/instance-startup.sh</li>
+<li><strong>BUCKET</strong>=&lt;Bucket Name&gt;</li>
+<li><strong>SQL_INSTANCE</strong>=&lt;SQL Instance Connection Name&gt;. You can get this value Under <strong>CloudSQL&gt; Instance&gt; Connect to this Instance</strong></li>
+</ol>
+<p><img style="max-width: 498.00px" src="img/60ec8b26324aaa1b.png"></p>
+<ol type="1" start="5">
+<li>Click <strong>Create </strong>and your template will be created.</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/2407d98d45874306.png"></p>
+<ol type="1" start="6">
+<li>In the side menu click<strong> Instance groups</strong>  and Click<strong> Create instance group.</strong></li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/e90a5c1fb4ce72cd.png"></p>
+<ol type="1" start="7">
+<li>Name the the instance group and select <strong>Location</strong>, <strong>Region</strong>, <strong>Group type, Instance Template</strong>, similar in the below image.</li>
+</ol>
+<p><img style="max-width: 471.00px" src="img/69ea5b7adc5634d5.png"></p>
+<ol type="1" start="8">
+<li>And Select <strong>Off</strong> in <strong>Autoscaling</strong> Option. And give the number of Instances.</li>
+<li>Select <strong>Health Check</strong> and click on <strong>Create a health check </strong></li>
+</ol>
+<p><img style="max-width: 472.00px" src="img/30699dbe3b315973.png"></p>
+<ol type="1" start="10">
+<li>In the Health check create dialog specify the name of the health and other values. Click <strong>Save and Continue</strong></li>
+</ol>
+<p><img style="max-width: 492.00px" src="img/bd07c5d91c5d25d6.png"></p>
+<ol type="1" start="11">
+<li>Give the value for Initial delay and Click <strong>Create</strong>.</li>
+</ol>
+<p><img style="max-width: 531.00px" src="img/55136b873bdd309f.png"></p>
+<ol type="1" start="12">
+<li>It will take some time to create groups and Instances. Once group is created you can Click on the group name and view the instances.</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/57a359d1548aa646.png"></p>
+<p><img style="max-width: 624.00px" src="img/b6b0f1167351dba.png"></p>
+<h3>Create a load balancer</h3>
+<ol type="1" start="1">
+<li>In the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>, click the Menu icon on the top left of the screen and Scroll down and select <strong>Network services &gt; Load balancing</strong> in the <strong>Networking</strong> subsection</li>
+</ol>
+<p><img style="max-width: 469.00px" src="img/269ed9bfc6d32df0.png"></p>
+<ol type="1" start="2">
+<li>Click <strong>Create load balancer</strong>.</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/6ca29f05a57e697e.png"></p>
+<ol type="1" start="3">
+<li>In HTTP(S) Load Balancing Click Start Configuration</li>
+</ol>
+<p><img style="max-width: 582.00px" src="img/fb747512c3eeff56.png"></p>
+<ol type="1" start="4">
+<li>Fill the name of the load balancer.</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/29a4113a51eea6b9.png"></p>
+<ol type="1" start="5">
+<li>Click <strong>Backend configuration.</strong></li>
+<li>In the Configuration dialog Select <strong>Create or select backend services and backend buckets</strong></li>
+<li>Then Select <strong>Backend services &gt; Create a backend service</strong></li>
+<li>In Create Backend service dialog Fill the name of the Backend service and other Same as the below iamge</li>
+</ol>
+<p><img style="max-width: 489.00px" src="img/fc4e4d0d6556c852.png"></p>
+<ol type="1" start="9">
+<li>Similarly Configure the frontend configuration</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/b9fc385be7204577.png"></p>
+<ol type="1" start="10">
+<li>Review the configuration and Click Create</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/7b73b0b624fe4aae.png"></p>
+<ol type="1" start="11">
+<li>Once Load balancer is created wait for some time to get activate. It will take 5 to 10 mins.</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/57cf45ce2498837d.png"></p>
+<ol type="1" start="12">
+<li>Get the Ip of the load balancer and hit in the browser. It should load your application.</li>
+</ol>
+<p><img style="max-width: 624.00px" src="img/3bf1f605cd77caf5.png"></p>
+<h3>Configure an autoscaler</h3>
+<ol type="1" start="1">
+<li>In Compute Engine &gt; Instance Groups, Edit the group which you created and Turn on the Autoscaling option. Configure Autoscale based on and Minimum and Maximum number of instances. </li>
+</ol>
+<p><img style="max-width: 526.00px" src="img/3764c7dbc9ffaa8e.png"></p>
+<h2>Horizontal scaling with multiple instances using Cloud Shell</h2>
 <h3>Create a managed instance group</h3>
 <p>A managed instance group is a group of homogeneous instances based on an instance template. In this section, you create a group of instances running your Spring Boot app.</p>
 <ol type="1" start="1">
 <li>Create an instance template:</li>
 </ol>
-<pre>        gcloud compute instance-templates create demo-template \
+<pre>    gcloud compute instance-templates create demo-template \
         --image-project ubuntu-os-cloud \
         --image-family ubuntu-1604-lts \
         --zone asia-south1-b \
@@ -428,7 +545,7 @@ java -jar demo.jar</pre>
 <li>Notice that the template provides most of the information needed to create instances.</li>
 <li>Next, create an instance group using the template:</li>
 </ol>
-<pre>    gcloud compute instance-groups managed create demo-group \
+<pre>  gcloud compute instance-groups managed create demo-group \
     --base-instance-name demo-group \
     --size 2 \
     --template demo-template \

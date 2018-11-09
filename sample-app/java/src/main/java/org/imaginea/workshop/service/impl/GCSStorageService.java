@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.imaginea.workshop.database.TenantContextHolder;
 import org.imaginea.workshop.service.StorageService;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -29,7 +28,7 @@ public class GCSStorageService implements StorageService {
   @Autowired
   private Storage storage;
 
-    @Value("${application.storage .bucket:sl-clms}")
+  @Value("${application.storage.bucket:sl-clms}")
   private String bucketName;
 
   @Override
@@ -41,7 +40,6 @@ public class GCSStorageService implements StorageService {
     System.out.println(fileName);
 
     Map<String, String> metaData = new HashMap<>();
-    metaData.put("tenantId", TenantContextHolder.getContext().getTenantId().toString());
     metaData.put("fileType", "csv");
     metaData.put("listId", listId);
 

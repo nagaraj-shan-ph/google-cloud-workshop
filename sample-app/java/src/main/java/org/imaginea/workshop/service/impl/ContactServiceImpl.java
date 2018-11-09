@@ -1,7 +1,6 @@
 package org.imaginea.workshop.service.impl;
 
 import java.util.function.Supplier;
-import org.imaginea.workshop.annotations.CurrentTenant;
 import org.imaginea.workshop.database.clms.model.Contact;
 import org.imaginea.workshop.database.clms.model.ContactList;
 import org.imaginea.workshop.database.clms.repository.ContactListRepository;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
-@CurrentTenant
 public class ContactServiceImpl implements ContactService {
 
   @Autowired

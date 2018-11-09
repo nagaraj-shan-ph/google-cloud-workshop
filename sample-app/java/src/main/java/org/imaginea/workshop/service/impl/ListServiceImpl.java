@@ -1,7 +1,6 @@
 package org.imaginea.workshop.service.impl;
 
 import java.util.function.Supplier;
-import org.imaginea.workshop.annotations.CurrentTenant;
 import org.imaginea.workshop.database.clms.model.ContactList;
 import org.imaginea.workshop.database.clms.repository.ContactListRepository;
 import org.imaginea.workshop.exception.NotFoundException;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@CurrentTenant
 public class ListServiceImpl implements ListService {
 
   @Autowired

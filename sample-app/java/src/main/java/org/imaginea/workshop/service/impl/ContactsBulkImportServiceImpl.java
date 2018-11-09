@@ -17,9 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import javax.sql.DataSource;
-import org.imaginea.workshop.database.TenantContextHolder;
-import org.imaginea.workshop.database.admin.model.Tenant;
-import org.imaginea.workshop.database.admin.repository.TenantRepository;
 import org.imaginea.workshop.database.clms.model.Contact;
 import org.imaginea.workshop.service.ContactsBulkImportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +32,11 @@ public class ContactsBulkImportServiceImpl implements ContactsBulkImportService 
   @Autowired
   private DataSource dataSource;
 
-  @Autowired
-  private TenantRepository repository;
-
   private PgBulkInsert<Contact> bulkInsert;
 
   @Override
   public void importContacts(Long tenantId, Long listId, InputStream inputStream) throws Exception {
     System.out.println("Inside import contacts for list ID" + listId);
-    setTenant(tenantId);
-    String schemaName = TenantContextHolder.getContext().getTenant().getSchemaName();
     bulkInsert = new PgBulkInsert<>(new Configuration(BUFFER_SIZE), new ContactMapping(listId));
     long start = Instant.now().toEpochMilli();
     AtomicInteger counter = new AtomicInteger(0);
@@ -67,12 +59,6 @@ public class ContactsBulkImportServiceImpl implements ContactsBulkImportService 
     }
     long end = Instant.now().toEpochMilli();
     System.out.println("Time Taken :" + ((end - start)) + " Millis");
-  }
-
-
-  private void setTenant(Long tenantId) {
-    Tenant tenant = repository.findById(tenantId).orElseThrow(() -> new RuntimeException("tenants not found"));
-    TenantContextHolder.setTenant(tenant, true);
   }
 
   private void doNothing() {

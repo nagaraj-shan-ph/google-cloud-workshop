@@ -5,19 +5,6 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- SCHEMA
 CREATE SCHEMA IF NOT EXISTS clms;
 
--- TABLES
-CREATE TABLE clms.tenants (
-  id                   BIGSERIAL,
-  created_at           TIMESTAMP,
-  created_by           VARCHAR(50),
-  tenant_name          VARCHAR(50) UNIQUE NOT NULL,
-  schema_name          VARCHAR(50),
-  updated_at           TIMESTAMP,
-  updated_by           VARCHAR(50),
-  url                  VARCHAR(255),
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE clms.contacts (
   id            BIGSERIAL,
   address1      VARCHAR(255),
@@ -37,7 +24,6 @@ CREATE TABLE clms.contacts (
   updated_by    VARCHAR(255),
   zip           VARCHAR(255),
   list_id       BIGINT,
-  tenant_id BIGINT NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -48,7 +34,6 @@ CREATE TABLE clms.contact_lists (
   name       VARCHAR(255) NOT NULL,
   updated_at TIMESTAMP,
   updated_by VARCHAR(255),
-  tenant_id BIGINT NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -63,13 +48,8 @@ CREATE INDEX "list_name_idx" ON clms.contact_lists USING btree (name);
 ALTER TABLE clms.contacts
   ADD CONSTRAINT FK_contacts_list_id FOREIGN KEY (list_id) REFERENCES contact_lists (id);
 
-ALTER TABLE clms.contacts ADD CONSTRAINT FK_contacts_tenant_id FOREIGN KEY (tenant_id) REFERENCES clms.tenants (id);
-
 ALTER TABLE clms.contacts
   ADD CONSTRAINT "contacts_email_list_id_unique_key" UNIQUE (email, list_id);
-
-ALTER TABLE clms.contact_lists
-  ADD CONSTRAINT FK_contacts_list_tenant_id FOREIGN KEY (tenant_id) REFERENCES clms.tenants (id);
 
 ALTER TABLE clms.contact_lists
   ADD CONSTRAINT "lists_name_unique_key" UNIQUE (name);
