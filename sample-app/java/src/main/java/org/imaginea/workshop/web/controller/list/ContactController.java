@@ -73,7 +73,7 @@ public class ContactController {
     return ResponseEntity.noContent().build();
   }
 
-  @ApiImplicitParams({@ApiImplicitParam(name = "file", value = "Contacts Csv File", dataType = "__file", paramType = "formData")})
+  @ApiImplicitParams({@ApiImplicitParam(name = "file", value = "Contacts Csv File", dataType = "__file", paramType = "form")})
   @PostMapping(path = "/bulkCreate", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {"multipart/form-data"})
   ResponseEntity<?> upload(@PathVariable("listId") Long listId, HttpServletRequest request) {
     listService.findById(listId);

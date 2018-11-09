@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import java.io.InputStream;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.imaginea.workshop.service.ContactsBulkImportService;
 import org.imaginea.workshop.service.StorageService;
 import org.slf4j.Logger;
@@ -27,6 +28,9 @@ import org.springframework.stereotype.Component;
 public class NotificationHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(NotificationHandler.class);
+
+  @Value("${application.storage.bucket.directory:contact_list/}")
+  private String contactsListDir;
 
   @Value("${application.pubsub.subscription.upload:file-upload-subscription}")
   private String uploadSubscriptionName;
@@ -58,14 +62,19 @@ public class NotificationHandler {
   public MessageHandler messageReceiver() {
     return message -> {
       AckReplyConsumer consumer = (AckReplyConsumer) message.getHeaders().get(GcpPubSubHeaders.ACKNOWLEDGEMENT);
-      ;
       try {
         logger.info("Message arrived! Payload: " + message.getPayload());
         Map<String, Object> map = objectMapper.readValue((String) message.getPayload(), new TypeReference<Map<String, Object>>() {
         });
-        InputStream inputStream = storageService.download(map.get("name").toString());
+        String name = String.valueOf(map.get("name"));
+
+        if(!StringUtils.startsWith(name, contactsListDir)){
+          return;
+        }
+
+        InputStream inputStream = storageService.download(name);
         Map metadata = (Map) map.get("metadata");
-        importService.importContacts(Long.parseLong((String) metadata.get("tenantId")), Long.parseLong((String) metadata.get("listId")), inputStream);
+        importService.importContacts(Long.parseLong((String) metadata.get("listId")), inputStream);
       } catch (Exception e) {
         logger.error("Error while handling message", e);
       } finally {

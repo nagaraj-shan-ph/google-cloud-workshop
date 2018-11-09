@@ -5,7 +5,7 @@ import org.imaginea.workshop.database.clms.model.Contact;
 import org.imaginea.workshop.database.clms.model.ContactList;
 import org.imaginea.workshop.database.clms.repository.ContactListRepository;
 import org.imaginea.workshop.database.clms.repository.ContactRepository;
-import org.imaginea.workshop.exception.NotFoundException;
+import org.imaginea.workshop.exception.ResourceNotFoundException;
 import org.imaginea.workshop.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +33,8 @@ public class ContactServiceImpl implements ContactService {
   @Override
   @Transactional
   public Contact create(Long listId, Contact contact) {
-    ContactList contactList = listRepository.findById(listId).orElseThrow((Supplier<RuntimeException>) NotFoundException::new);
+    ContactList contactList = listRepository.findById(listId).orElseThrow(
+        (Supplier<RuntimeException>) () -> new ResourceNotFoundException("List not found for Id " + listId));
     contact.setContactList(contactList);
     repository.save(contact);
     return contact;
@@ -41,7 +42,8 @@ public class ContactServiceImpl implements ContactService {
 
   @Override
   public Contact findByListIdAndId(Long listId, Long id) {
-    return repository.findByIdAndContactListId(id, listId).orElseThrow((Supplier<RuntimeException>) NotFoundException::new);
+    return repository.findByIdAndContactListId(id, listId).orElseThrow(
+        (Supplier<RuntimeException>) () -> new ResourceNotFoundException("Contact not found for Id " + id + "In the list " + listId));
   }
 
   @Override

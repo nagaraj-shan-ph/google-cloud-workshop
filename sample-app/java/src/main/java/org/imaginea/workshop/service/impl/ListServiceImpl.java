@@ -3,7 +3,7 @@ package org.imaginea.workshop.service.impl;
 import java.util.function.Supplier;
 import org.imaginea.workshop.database.clms.model.ContactList;
 import org.imaginea.workshop.database.clms.repository.ContactListRepository;
-import org.imaginea.workshop.exception.NotFoundException;
+import org.imaginea.workshop.exception.ResourceNotFoundException;
 import org.imaginea.workshop.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +32,7 @@ public class ListServiceImpl implements ListService {
 
   @Override
   public ContactList findById(Long id) {
-    return repository.findById(id).orElseThrow((Supplier<RuntimeException>) NotFoundException::new);
+    return repository.findById(id).orElseThrow((Supplier<RuntimeException>) () -> new ResourceNotFoundException("List Not found for Id : " + id));
   }
 
   @Override

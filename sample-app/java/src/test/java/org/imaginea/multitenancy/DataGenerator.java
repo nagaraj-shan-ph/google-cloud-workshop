@@ -17,7 +17,7 @@ public class DataGenerator {
 
   public static void main(String[] args) throws Exception {
 
-    int numberOfRows = 1000000;
+    int numberOfRows = 100;
     // Create a collection of all available countries
     String[] locales = Locale.getISOCountries();
 

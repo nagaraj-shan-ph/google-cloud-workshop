@@ -35,7 +35,7 @@ public class ContactsBulkImportServiceImpl implements ContactsBulkImportService 
   private PgBulkInsert<Contact> bulkInsert;
 
   @Override
-  public void importContacts(Long tenantId, Long listId, InputStream inputStream) throws Exception {
+  public void importContacts(Long listId, InputStream inputStream) throws Exception {
     System.out.println("Inside import contacts for list ID" + listId);
     bulkInsert = new PgBulkInsert<>(new Configuration(BUFFER_SIZE), new ContactMapping(listId));
     long start = Instant.now().toEpochMilli();
@@ -83,7 +83,6 @@ public class ContactsBulkImportServiceImpl implements ContactsBulkImportService 
       mapText("state", Contact::getState);
       mapTimeStamp("updated_at", contact -> LocalDateTime.now());
       mapText("updated_by", Contact::getUpdatedBy);
-      mapLong("version", contact -> 0L);
       mapText("zip", Contact::getZip);
       mapLong("list_id", contact -> listId);
     }

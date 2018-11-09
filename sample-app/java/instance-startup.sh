@@ -17,6 +17,27 @@ sudo apt-get -y --force-yes install openjdk-8-jdk
 # Make Java 8 default
 sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
+# Install Monitoring Agent
+curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh
+sudo bash install-monitoring-agent.sh
+
+# Install Logging Agent
+curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
+sudo bash install-logging-agent.sh --structured
+
+cat <<EOF > /etc/google-fluentd/config.d/clms.conf
+<source>
+  @type tail
+  format none
+  path /var/log/clms/*.log
+  pos_file /var/lib/google-fluentd/pos/clms.pos
+  read_from_head true
+  tag clms
+</source>
+EOF
+
+sudo service google-fluentd reload
+
 # Download Cloud Proxy and make it executable
 wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
 chmod +x cloud_sql_proxy

@@ -1,7 +1,8 @@
 spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
 spring.cloud.gcp.pubsub.subscriber-executor-threads: 1
 logging:
-  config: classpath:log4j2/log4j2.yml
+  config: classpath:log4j2/log4j2.xml
+  file: /var/log/clms/spring-boot-logging.log
   level:
     org:
       hibernate: INFO
