@@ -25,6 +25,7 @@ sudo bash install-monitoring-agent.sh
 curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
 sudo bash install-logging-agent.sh --structured
 
+# Adding Logging Config
 cat <<EOF > /etc/google-fluentd/config.d/clms.conf
 <source>
   @type tail

@@ -28,10 +28,10 @@ spring:
       max-lifetime: 2000000
       maximum-pool-size: 300
       minimum-idle: 10
-    password: postgres
+    password: demopass
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/imaginea-gc-workshop?currentSchema=clms
-    username: postgres
+    username: demouser
   jackson:
     date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
     joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
