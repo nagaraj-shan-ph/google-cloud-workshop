@@ -3,9 +3,9 @@ CREATE EXTENSION IF NOT EXISTS "plpgsql";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- SCHEMA
-CREATE SCHEMA IF NOT EXISTS clms;
+CREATE SCHEMA IF NOT EXISTS workshop;
 
-CREATE TABLE clms.contacts (
+CREATE TABLE workshop.contacts (
   id            BIGSERIAL,
   address1      VARCHAR(255),
   address2      VARCHAR(255),
@@ -27,7 +27,7 @@ CREATE TABLE clms.contacts (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE clms.contact_lists (
+CREATE TABLE workshop.contact_lists (
   id         BIGSERIAL,
   created_at TIMESTAMP,
   created_by VARCHAR(255),
@@ -38,20 +38,20 @@ CREATE TABLE clms.contact_lists (
 );
 
 -- INDEXES
-CREATE INDEX "contacts_email_idx" ON clms.contacts USING btree (email);
-CREATE INDEX "contacts_first_name_idx" ON clms.contacts USING btree (first_name);
-CREATE INDEX "contacts_last_name_idx" ON clms.contacts USING btree (last_name);
-CREATE INDEX "contacts_list_id_idx" ON clms.contacts USING btree (list_id);
-CREATE INDEX "list_name_idx" ON clms.contact_lists USING btree (name);
+CREATE INDEX "contacts_email_idx" ON workshop.contacts USING btree (email);
+CREATE INDEX "contacts_first_name_idx" ON workshop.contacts USING btree (first_name);
+CREATE INDEX "contacts_last_name_idx" ON workshop.contacts USING btree (last_name);
+CREATE INDEX "contacts_list_id_idx" ON workshop.contacts USING btree (list_id);
+CREATE INDEX "list_name_idx" ON workshop.contact_lists USING btree (name);
 
 -- CONSTRAINTS
-ALTER TABLE clms.contacts
+ALTER TABLE workshop.contacts
   ADD CONSTRAINT FK_contacts_list_id FOREIGN KEY (list_id) REFERENCES contact_lists (id);
 
-ALTER TABLE clms.contacts
+ALTER TABLE workshop.contacts
   ADD CONSTRAINT "contacts_email_list_id_unique_key" UNIQUE (email, list_id);
 
-ALTER TABLE clms.contact_lists
+ALTER TABLE workshop.contact_lists
   ADD CONSTRAINT "lists_name_unique_key" UNIQUE (name);
 
 

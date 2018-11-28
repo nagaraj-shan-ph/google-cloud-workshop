@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FlywayConfig {
 
-  public static final String DEFAULT_SCHEMA = "clms";
+  public static final String DEFAULT_SCHEMA = "workshop";
 
   private Logger logger = LoggerFactory.getLogger(getClass());
 

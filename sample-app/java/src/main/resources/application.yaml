@@ -2,7 +2,7 @@ spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
 spring.cloud.gcp.pubsub.subscriber-executor-threads: 1
 logging:
   config: classpath:log4j2/log4j2.xml
-  file: /var/log/clms/spring-boot-logging.log
+  file: /var/log/workshop/spring-boot-logging.log
   level:
     org:
       hibernate: INFO
@@ -30,7 +30,7 @@ spring:
       minimum-idle: 10
     password: demopass
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/imaginea-gc-workshop?currentSchema=clms
+    url: jdbc:postgresql://localhost:5432/imaginea-gc-workshop?currentSchema=workshop
     username: demouser
   jackson:
     date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat

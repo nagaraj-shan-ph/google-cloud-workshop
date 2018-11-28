@@ -26,14 +26,14 @@ curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
 sudo bash install-logging-agent.sh --structured
 
 # Adding Logging Config
-cat <<EOF > /etc/google-fluentd/config.d/clms.conf
+cat <<EOF > /etc/google-fluentd/config.d/workshop.conf
 <source>
   @type tail
   format none
-  path /var/log/clms/*.log
-  pos_file /var/lib/google-fluentd/pos/clms.pos
+  path /var/log/workshop/*.log
+  pos_file /var/lib/google-fluentd/pos/workshop.pos
   read_from_head true
-  tag clms
+  tag workshop
 </source>
 EOF
 
@@ -46,7 +46,7 @@ chmod +x cloud_sql_proxy
 # Create Directory for Cloud Sql Proxy Connection
 mkdir cloudsql; sudo chmod 777 cloudsql
 
-service_name=clms
+service_name=workshop
 sudo mkdir -p /var/log/${service_name}
 sudo touch /var/log/${service_name}/app.log
 sudo touch /var/log/${service_name}/${service_name}-stderr.log
